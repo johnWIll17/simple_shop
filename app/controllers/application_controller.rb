@@ -71,7 +71,10 @@ class ApplicationController < ActionController::Base
     end
 
     def set_model_object
-      @model_object = @model.find(params[:id])
+      @model_object = @model.find_by(id: params[:id])
+      unless @model_object
+        redirect_to '/404'
+      end
     end
 
     def object_params
@@ -80,6 +83,7 @@ class ApplicationController < ActionController::Base
 
     def action_form status
       @model.where(id: params[@primary_key]).update_all(active: status) unless @model.nil?
+      flash[:success] = "You have #{status.to_s + 'd'} successfully!"
       redirect_to :back
     end
 

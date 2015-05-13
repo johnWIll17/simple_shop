@@ -16,21 +16,43 @@
 //require turbolinks
 //= require_tree .
 
+var messageElement = function() {
+  var divMessage = document.createElement('div');
+  divMessage.textContent = 'You have to select at least one box';
+  divMessage.setAttribute('class', 'alert alert-danger message');
+
+  var closeButton = document.createElement('a');
+  closeButton.innerHTML= "&#215;";
+  closeButton.setAttribute('class', 'close');
+  closeButton.setAttribute('data-dismiss', 'alert');
+
+  divMessage.appendChild(closeButton);
+
+  return divMessage;
+}
+
 $(function() {
+  var divMessage = messageElement();
+  var $flashMessage = $('.flash-messages');
 
   $(".bulk-action input[type='submit']").on('click', function(e) {
+    $flashMessage.empty();
+
     var numberCheckedBox = $("input:checked").length;
     if (!numberCheckedBox) {
-      alert('You have to check at least one box');
+      e.preventDefault();
+      $flashMessage.append(divMessage);
     } else {
+      //fix this.value to this.name after change name for button
       if (this.value === 'Delete') {
         var result = window.confirm('Are you sure?');
         if (!result) {
           e.preventDefault();
-          location.reload();
         }
       }
     }
   });
 
 });
+
+
