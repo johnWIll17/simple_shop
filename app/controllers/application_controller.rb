@@ -11,12 +11,12 @@ class ApplicationController < ActionController::Base
   def initialize
     super
     @model = nil
-    @primary_key = nil
+    @selected_ids = :selected_ids
 
     @white_list_params = nil
-    @object_require = nil
 
     @model_objects_path = nil
+
     @search_list = nil
   end
 
@@ -81,12 +81,20 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    # This method contains extra information about @model_object
+    #   @object_require: object when submit form (new/edit)
+    #   @model_new_path: the path to create new object (ex: new_product_path)
+    def object_info
+      @object_require = @model.to_s.downcase.to_sym
+      @model_new_path = "new_#{@model.to_s.downcase}_path".to_sym
+    end
+
     def object_params
       params.require(@object_require).permit(*@white_list_params)
     end
 
     def action_form status
-      @model.where(id: params[@primary_key]).update_all(active: status) unless @model.nil?
+      @model.where(id: params[@selected_ids]).update_all(active: status) if @model
       flash[:success] = "You have #{status.to_s + 'd'} successfully!"
       redirect_to :back
     end

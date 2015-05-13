@@ -6,7 +6,7 @@
 <% content_for :table_body do %>
   <% @model_objects.each do |model_object| %>
     <tr>
-      <td><%= check_box_tag 'product_ids[]', model_object.id %></td>
+      <td><%= check_box_tag 'selected_ids[]', model_object.id %></td>
       <td><%= model_object.id %></td>
       <td><%= model_object.product_name %></td>
       <td><%= model_object.price %></td>
