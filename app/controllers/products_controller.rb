@@ -15,31 +15,6 @@ class ProductsController < ApplicationController
     @search_list = ['product_name', 'price', 'active']
   end
 
-
-  def create
-    @model_object = @model.new(object_params)
-    if @model_object.save
-      create_image
-
-      flash[:success] = 'Your product has been created successfully!'
-      redirect_to products_path
-    else
-      render :new
-    end
-  end
-
-  def update
-    @model_object = @model.find(params[:id])
-    if @model_object.update(object_params)
-      create_image
-
-      flash[:success] = 'Your product has been updated successfully!'
-      redirect_to products_path
-    else
-      render :edit
-    end
-  end
-
   def delete_image
     picture = Picture.find(params[:pic_id])
     picture.remove_image!
@@ -49,6 +24,10 @@ class ProductsController < ApplicationController
   end
 
   private
+    def create_success
+      create_image
+    end
+
     def create_image
       if params[:images]
         params[:images].each do |img|

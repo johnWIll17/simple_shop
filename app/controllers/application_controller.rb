@@ -34,6 +34,8 @@ class ApplicationController < ActionController::Base
   def create
     @model_object = @model.new(object_params)
     if @model_object.save
+      child_logic
+
       flash[:success] = "You have created successfully!"
       redirect_to send(@model_objects_path)
     else
@@ -43,6 +45,8 @@ class ApplicationController < ActionController::Base
 
   def update
     if @model_object.update(object_params)
+      child_logic
+
       flash[:success] = "You have updated successfully!"
       redirect_to send(@model_objects_path)
     else
@@ -85,6 +89,10 @@ class ApplicationController < ActionController::Base
       @model.where(id: params[@primary_key]).update_all(active: status) unless @model.nil?
       flash[:success] = "You have #{status.to_s + 'd'} successfully!"
       redirect_to :back
+    end
+
+    def child_logic
+      create_success if defined? create_success
     end
 
 end
