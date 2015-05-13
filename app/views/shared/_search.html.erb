@@ -1,0 +1,12 @@
+<div class="row-fluid">
+  <div class="span12 search">
+    <%= form_tag send(@model_objects_path), method: :get do %>
+      <%= hidden_field_tag :direction, params[:direction] %>
+      <%= hidden_field_tag :sort, params[:sort] %>
+
+      <%= text_field_tag :search, params[:search], class: 'span11', placeholder: 'Type search text in here...' %>
+      <%= submit_tag "Search", name: nil, class: 'btn span1' %>
+    <% end %>
+  </div>
+</div>
+

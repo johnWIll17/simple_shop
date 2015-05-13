@@ -1,0 +1,15 @@
+<%= form.input :username %>
+<%= form.input :email %>
+<%= form.input :password %>
+<%= form.input :password_confirmation %>
+<%= form.input :active, collection: ['Active', 'Deactive'], include_blank: false %>
+<%#= file_field_tag 'images[]', type: :file, multiple: true, accept: 'image/jpeg, image/gif, image/png', class: 'span9' %>
+<%# unless @model_object.new_record? %>
+  <%#= render 'form_image', model_object: @model_object %>
+<%# end %>
+
+<div class='row-form'>
+  <%= form.button :submit %>
+</div>
+
+

@@ -1,0 +1,19 @@
+<%= form.input :product_name, placeholder: 'Enter product name...' %>
+<%= form.input :price, input_html: { min: 0 } %>
+<%= form.input :description, placeholder: 'Enter description for product name...' %>
+<%= form.association :category, label_method: :to_s, include_blank: false %>
+<%= form.input :active, collection: ['Active', 'Deactive'], include_blank: false %>
+
+<div class='row-form'>
+  <%= label_tag nil, 'Upload images', class: 'span3' %>
+  <%= file_field_tag 'images[]', type: :file, multiple: true, accept: 'image/jpeg, image/gif, image/png', class: 'span9' %>
+</div>
+
+<% unless @model_object.new_record? %>
+  <%= render 'form_image', model_object: @model_object %>
+<% end %>
+
+<div class='row-form'>
+  <%= form.button :submit %>
+</div>
+

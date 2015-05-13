@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SimpleShop</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="container">
+    <%= render 'layouts/messages' %>
+  </div>
+  <%= render 'layouts/header' %>
+  <%= render 'layouts/sidebar' %>
+
+  <div class="content">
+    <div class="workplace">
+      <%= yield %>
+    </div>
+  </div>
+
+</body>
+</html>

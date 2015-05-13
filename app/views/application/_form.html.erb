@@ -1,0 +1,17 @@
+<div class="row-fluid">
+  <div class="span12">
+    <%= render 'shared/form_head', obj_hash: obj_hash %>
+
+    <div class="block-fluid">
+
+      <%= simple_form_for @model_object, html: { multipart: true },
+        defaults: { wrapper_html: {class: 'row-form'},
+                    input_html: { class: 'span9' },
+                    label_html: { class: 'span3' } } do |form| %>
+
+        <%= render obj_hash[:form_path], form: form %>
+
+      <% end %>
+    </div>
+  </div>
+</div>

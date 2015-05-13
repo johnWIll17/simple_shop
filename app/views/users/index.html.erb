@@ -1,0 +1,22 @@
+<% content_for :table_head do %>
+  <td width="30%" class="sorting"><%= sortable 'username' %></td>
+  <td width="15%" class="sorting"><%= sortable 'email' %></td>
+<% end %>
+
+<% content_for :table_body do %>
+  <% @model_objects.each do |model_object| %>
+    <tr>
+      <td><%= check_box_tag 'user_ids[]', model_object.id %></td>
+      <td><%= model_object.id %></td>
+      <td><%= model_object.username %></td>
+      <td><%= model_object.email %></td>
+      <td><%= model_object.active %></td>
+      <td><%= model_object.created_at %></td>
+      <td><%= model_object.updated_at %></td>
+      <td><%= link_to 'Edit', edit_user_path(model_object), class: 'btn btn-info' %></td>
+    </tr>
+  <% end %>
+<% end %>
+
+<%= render 'application/index', obj_hash: object_variables %>
+

@@ -1,0 +1,41 @@
+<%= render 'shared/search' %>
+
+<div class="row-fluid">
+    <div class="span12">
+      <%= render 'shared/form_head', obj_hash: obj_hash %>
+
+        <div class="block-fluid table-sorting">
+            <%= link_to "Add #{obj_hash[:object_name]}", send(@model_new_path), class: 'btn btn-add' %>
+
+
+          <%= form_tag obj_hash[:status_form_path], method: :put do %>
+            <table cellpadding="0" cellspacing="0" width="100%" class="table" id="tSortable_2">
+                <thead>
+                <tr>
+
+                    <th><%= check_box_tag 'selectAll', nil %></th>
+                    <th width="10%" class="sorting"><%= sortable 'id', 'ID' %></th>
+                    <%= yield :table_head %>
+                    <th width="15%" class="sorting"><%= sortable 'active', 'Activate' %></th>
+                    <th width="10%" class="sorting"><%= sortable 'created_at', 'Time Created' %></th>
+                    <th width="10%" class="sorting"><%= sortable 'updated_at', 'Time Updated' %></th>
+                    <th width="10%">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <%= yield :table_body %>
+                </tbody>
+            </table>
+            <div class="bulk-action">
+              <%= submit_tag obj_hash[:object_controller]::ACTIVE, class: 'btn btn-success' %>
+              <%= submit_tag obj_hash[:object_controller]::DEACTIVE, class: 'btn btn-danger confirm-delete' %>
+            </div><!-- /bulk-action-->
+          <% end %>
+            <div class='table-paginate'>
+                <%= will_paginate @model_objects %>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="dr"><span></span></div>

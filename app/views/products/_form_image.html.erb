@@ -1,0 +1,15 @@
+<% unless @model_object.pictures.empty? %>
+  <div class='row-form'>
+    <h3>Product Images</h3>
+    <div class='row-fluid'>
+      <ul class='product-image'>
+        <% @model_object.pictures.each do |pic| %>
+          <li class='image'>
+            <%= image_tag pic.image.url(:thumb) if pic.image? %>
+            <span><%= link_to 'Delete', delete_image_path(@model_object, pic_id: pic.id), method: :delete %></span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

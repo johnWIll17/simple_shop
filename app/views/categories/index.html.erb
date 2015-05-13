@@ -1,0 +1,19 @@
+<% content_for :table_head do %>
+  <th width="45%" class="sorting"><%= sortable 'category_name' %></th>
+<% end %>
+
+<% content_for :table_body do %>
+  <% @model_objects.each do |model_object| %>
+    <tr>
+      <td><%= check_box_tag 'category_ids[]', model_object.id %></td>
+      <td><%= model_object.id %></td>
+      <td><%= model_object.category_name %></td>
+      <td><%= model_object.active %></td>
+      <td><%= model_object.created_at %></td>
+      <td><%= model_object.updated_at %></td>
+      <td><%= link_to 'Edit', edit_category_path(model_object), class: 'btn btn-info' %></td>
+    </tr>
+  <% end %>
+<% end %>
+
+<%= render 'application/index', obj_hash: object_variables %>

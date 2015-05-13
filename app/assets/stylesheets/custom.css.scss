@@ -1,0 +1,71 @@
+@import "bootstrap-sprockets";
+@import "bootstrap_2";
+@import "style";
+@import "login";
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 22px;
+    position: relative;
+    background: url( asset-path("backgrounds/body.jpg") ) left top repeat;
+}
+
+td {
+  width: 200px;
+
+  &:first-child {
+    width: 15px;
+  }
+  &:nth-child(2) {
+    width:20px;
+  }
+}
+
+hr {
+  border: 1px solid #000;
+}
+
+table {
+  margin-left: 0px;
+}
+
+.table-paginate {
+  float: right;
+  margin-top: 0;
+  margin-right: 5px;
+
+  .paginate {
+    margin-top: 0;
+  }
+}
+
+//span.error {
+//  margin-left: 240px;
+//  color: red;
+//  width: 700px;
+//}
+
+.product-image {
+  list-style: none;
+
+  li {
+    float: left;
+    margin: 30px 10px;
+    width: 100px;
+    img {
+      border: 3px dotted #000;
+    }
+  }
+}
+
+.row-form span.error {
+  display: block;
+  color: red;
+  margin-left: 240px;
+}

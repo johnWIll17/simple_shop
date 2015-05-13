@@ -1,0 +1,39 @@
+<div class="menu">
+
+    <div class="breadLine">
+        <div class="arrow"></div>
+        <div class="adminControl active">
+            Hi, Ta Quoc Vuong
+        </div>
+    </div>
+
+    <div class="admin">
+        <div class="image">
+            <%= image_tag 'users/avatar.jpg', class: 'img-polaroid' %>
+        </div>
+        <ul class="control">
+            <li><span class="icon-cog"></span> <%= link_to 'Update Profile', '#' %></li>
+            <li><span class="icon-cog"></span> <%= link_to 'Logout', '#' %></li>
+        </ul>
+    </div>
+
+    <ul class="navigation">
+        <li>
+            <%= link_to categories_path do %>
+                <span class="isw-grid"></span><span class="text">Categories</span>
+            <% end %>
+        </li>
+        <li>
+            <%= link_to products_path do %>
+              <span class="isw-list"></span><span class="text">Products</span>
+            <% end %>
+        </li>
+        <li>
+            <%= link_to users_path do %>
+              <span class="isw-user"></span><span class="text">Users</span>
+            <% end %>
+        </li>
+    </ul>
+
+</div>
+
