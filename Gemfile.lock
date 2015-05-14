@@ -47,7 +47,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
-    commit_param_routing (0.0.1)
     erubis (2.7.0)
     execjs (2.5.2)
     faraday (0.9.1)
@@ -152,7 +151,6 @@ DEPENDENCIES
   bootstrap-will_paginate (= 0.0.10)
   carrierwave
   coffee-rails (~> 4.0.0)
-  commit_param_routing
   jbuilder (~> 2.0)
   jquery-rails
   mini_magick

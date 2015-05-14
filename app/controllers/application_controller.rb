@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :set_model_object, only: [:edit, :update]
 
   #Constants for working with Active & Delete submit button
-  ACTIVE = 'Active'
-  DEACTIVE = 'Delete'
+  #ACTIVE = 'Active'
+  #DEACTIVE = 'Delete'
 
   def initialize
     super
@@ -55,13 +55,14 @@ class ApplicationController < ActionController::Base
   end
 
   #Methods for working with Active & Delete submit button
-  def deactive
-    action_form 'Deactive'
+  def status_form
+    if params[:button_name] == 'active'
+      active
+    else
+      deactive
+    end
   end
 
-  def active
-    action_form 'Active'
-  end
 
   private
 
@@ -95,8 +96,16 @@ class ApplicationController < ActionController::Base
 
     def action_form status
       @model.where(id: params[@selected_ids]).update_all(active: status) if @model
-      flash[:success] = "You have #{status.to_s + 'd'} successfully!"
+      flash[:success] = "Successfully!"
       redirect_to :back
+    end
+
+    def deactive
+      action_form 'Deactive'
+    end
+
+    def active
+      action_form 'Active'
     end
 
     def child_logic

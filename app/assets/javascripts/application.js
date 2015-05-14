@@ -44,7 +44,11 @@ $(function() {
       $flashMessage.append(divMessage);
     } else {
       //fix this.value to this.name after change name for button
-      if (this.value === 'Delete') {
+      var $submitButton = $('#button_name'),
+          dataButtonName = this.getAttribute('data-button-name');
+      $submitButton.attr('value', dataButtonName);
+
+      if (dataButtonName === 'deactive') {
         var result = window.confirm('Are you sure?');
         if (!result) {
           e.preventDefault();

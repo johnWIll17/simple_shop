@@ -29,7 +29,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 #gem 'spring', '1.3.5',       group: :development
 
 gem 'bootstrap-sass'
-gem 'commit_param_routing'
+#gem 'commit_param_routing'
 gem 'will_paginate', '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
 
