@@ -9,7 +9,7 @@ class CategoriesController < ApplicationController
 
     @model_objects_path = :categories_path
 
-    @search_list = ['category_name', 'active']
+    @search_list = ['category_name']
 
     object_info
   end

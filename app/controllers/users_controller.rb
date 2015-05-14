@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
     @model_objects_path = :users_path
 
-    @search_list = ['username', 'email', 'active']
+    @search_list = ['username', 'email']
 
     object_info
   end

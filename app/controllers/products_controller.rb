@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
 
     @model_objects_path = :products_path
 
-    @search_list = ['product_name', 'price', 'active']
+    @search_list = ['product_name', 'price']
 
     object_info
   end

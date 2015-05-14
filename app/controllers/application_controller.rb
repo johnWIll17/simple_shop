@@ -5,8 +5,11 @@ class ApplicationController < ActionController::Base
   before_action :set_model_object, only: [:edit, :update]
 
   #Constants for working with Active & Delete submit button
-  #ACTIVE = 'Active'
-  #DEACTIVE = 'Delete'
+  ACTIVE = true
+  DEACTIVE = false
+
+  SELECT_ACTIVE = 'Active'
+  SELECT_DEACTIVE = 'Deactive'
 
   def initialize
     super
@@ -90,8 +93,14 @@ class ApplicationController < ActionController::Base
       @model_new_path = "new_#{@model.to_s.downcase}_path".to_sym
     end
 
-    def object_params
+    def white_list_params
       params.require(@object_require).permit(*@white_list_params)
+    end
+
+    def object_params
+      new_params = white_list_params
+      new_params[:active] = ( new_params[:active] == SELECT_ACTIVE ? true : false )
+      new_params
     end
 
     def action_form status
@@ -101,11 +110,11 @@ class ApplicationController < ActionController::Base
     end
 
     def deactive
-      action_form 'Deactive'
+      action_form DEACTIVE
     end
 
     def active
-      action_form 'Active'
+      action_form ACTIVE
     end
 
     def child_logic

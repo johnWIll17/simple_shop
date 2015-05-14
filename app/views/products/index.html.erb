@@ -1,6 +1,6 @@
 <% content_for :table_head do %>
-  <td width="30%" class="sorting"><%= sortable 'product_name' %></td>
-  <td width="15%" class="sorting"><%= sortable 'price', 'Price (VND)' %></td>
+  <th width="30%" class="sorting"><%= sortable 'product_name' %></td>
+  <th width="15%" class="sorting"><%= sortable 'price', 'Price (VND)' %></td>
 <% end %>
 
 <% content_for :table_body do %>
@@ -10,7 +10,7 @@
       <td><%= model_object.id %></td>
       <td><%= model_object.product_name %></td>
       <td><%= model_object.price %></td>
-      <td><%= model_object.active %></td>
+      <td><%= display_active_column(model_object) %></td>
       <td><%= model_object.created_at %></td>
       <td><%= model_object.updated_at %></td>
       <td><%= link_to 'Edit', edit_product_path(model_object), class: 'btn btn-info' %></td>

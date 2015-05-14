@@ -6,4 +6,8 @@ module ApplicationHelper
     link_to title, params.merge( sort: column, direction: direction )
   end
 
+  def display_active_column model_object
+    model_object.active ? 'Active' : 'Deactive'
+  end
+
 end

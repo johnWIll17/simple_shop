@@ -8,7 +8,7 @@
       <td><%= check_box_tag 'selected_ids[]', model_object.id %></td>
       <td><%= model_object.id %></td>
       <td><%= model_object.category_name %></td>
-      <td><%= model_object.active %></td>
+      <td><%= display_active_column(model_object) %></td>
       <td><%= model_object.created_at %></td>
       <td><%= model_object.updated_at %></td>
       <td><%= link_to 'Edit', edit_category_path(model_object), class: 'btn btn-info' %></td>
