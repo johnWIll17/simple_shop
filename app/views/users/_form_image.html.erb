@@ -1,0 +1,14 @@
+<% unless !@model_object.avatar? %>
+  <div class='row-form'>
+    <h3>User Avatar</h3>
+    <div class='row-fluid'>
+      <ul class='user-avatar'>
+        <li class='image'>
+          <%= image_tag @model_object.avatar.url(:thumb) %>
+          <span><%= link_to 'Delete', delete_avatar_user_path(@model_object), method: :delete %></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+<% end %>
+

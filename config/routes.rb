@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     collection do
       put 'status' => 'users#status_form'
     end
+    delete 'delete/avatar' => 'users#delete_avatar', as: :delete_avatar, on: :member
   end
 
 end

@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 
   include Searchable
 
+  mount_uploader :avatar, ImageUploader
+
   VALID_USERNAME = /\A[a-zA-Z\d\-\_]*\Z/i
   authenticates_with_sorcery!
 
