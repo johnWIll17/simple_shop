@@ -21,4 +21,34 @@ Authenticate
      - when sign_up successfully => profile_page
 
 
-2. Add image column to users
+1. Sign_up          vs.           Add_user
+
+- same:      users#new + create
+- diff:
+   + template: - use 2 diff templates
+                 use if/else on new/create render ..
+
+  . username                  . username
+  . email                     . email
+  . password                  . password
+  . password confirm          . password confirm
+                              . active
+                              . avatar
+
+
+2. Update_profile   vs.           Edit_user
+
+- same:       users#edit + update
+- diff:
+    + template
+
+  . username                  . username
+  . email                     . email
+  . password                  . password
+  . password confirm          . password confirm
+                              . active    #use unless admin?
+  . avatar                    . avatar
+
+
+3. errors
+     - users:active default:true not working

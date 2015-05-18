@@ -429,7 +429,7 @@ Rails.application.config.sorcery.configure do |config|
     # How long since last activity is the user defined logged out?
     # Default: `10 * 60`
     #
-    # user.activity_timeout =
+    # user.activity_timeout = 10
 
 
     # -- external --

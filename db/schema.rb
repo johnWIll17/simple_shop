@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515014830) do
+ActiveRecord::Schema.define(version: 20150515071712) do
 
   create_table "categories", force: true do |t|
     t.string   "category_name"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150515014830) do
     t.datetime "updated_at"
     t.boolean  "admin",            default: false
     t.string   "username"
-    t.boolean  "active"
+    t.boolean  "active",           default: false
     t.string   "avatar"
   end
 
