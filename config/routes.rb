@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
   delete '/products/:id/delete/images/:pic_id' => 'products#delete_image', as: :delete_image
 
-  resources :users, except: :destroy do
+  resources :users, except: [:show, :destroy] do
     collection do
       put 'status' => 'users#status_form'
     end
