@@ -4,7 +4,7 @@
 <%= form.input :password_confirmation %>
 
 <% if current_user.admin? %>
-  <%= form.input :active, collection: ['Active', 'Deactive'], selected: display_active_column(@model_object), include_blank: false %>
+  <%= form.input :active, collection: ['Active', 'Deactive'], selected: ( @model_object.new_record? ? 'Active' : display_active_column(@model_object) ), include_blank: false %>
 <% end %>
 
 <%= form.input :avatar, as: :file %>

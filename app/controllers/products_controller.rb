@@ -23,9 +23,9 @@ class ProductsController < ApplicationController
   end
 
   private
-    def create_success
-      create_image
-    end
+    #def create_success
+    #  create_image
+    #end
 
     def create_image
       if params[:images]

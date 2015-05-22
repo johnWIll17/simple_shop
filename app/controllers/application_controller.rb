@@ -6,16 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :user_access
   before_action :set_model_object, only: [:edit, :update]
 
-  def user_access
-    if current_user
-      unless current_user.admin?
-        flash[:danger] = "You don't have permission to access that page!"
-        redirect_to user_path(current_user)
-        #only access to show page & edit page
-      end
-    end
-  end
-
 
   #Constants for working with Active & Delete submit button
   ACTIVE = true
@@ -50,10 +40,7 @@ class ApplicationController < ActionController::Base
   def create
     @model_object = @model.new(object_params)
     if @model_object.save
-      #NOTE: I think should remove this child_logic
-      #      repalce it directly with create_success like
-      #      create_success if defined? create_success
-      child_logic
+      create_image if defined? create_image
 
       flash[:success] = "You have created successfully!"
 
@@ -71,7 +58,7 @@ class ApplicationController < ActionController::Base
         redirect_to user_path(current_user)
         return
       end
-      child_logic
+      create_image if defined? create_image
 
       flash[:success] = "You have updated successfully!"
       redirect_to send(@model_objects_path)
@@ -140,13 +127,23 @@ class ApplicationController < ActionController::Base
       action_form ACTIVE
     end
 
-    def child_logic
-      create_success if defined? create_success
-    end
+    #def child_logic
+    #  create_success if defined? create_success
+    #end
 
     def not_authenticated
-      flash[:warning] = 'You have to authenticate to access that page.'
+      #flash[:warning] = 'You have to authenticate to access that page.'
+      flash[:danger] = 'You have to authenticate to access that page.'
       redirect_to log_in_path
+    end
+
+    def user_access
+      if current_user
+        unless current_user.admin?
+          flash[:danger] = "You don't have permission to access that page!"
+          redirect_to user_path(current_user)
+        end
+      end
     end
 
 end

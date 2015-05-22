@@ -2,7 +2,7 @@
 <%= form.input :price, input_html: { min: 0 } %>
 <%= form.input :description, placeholder: 'Enter description for product name...' %>
 <%= form.association :category, label_method: :to_s, include_blank: false %>
-<%= form.input :active, collection: ['Active', 'Deactive'], selected: display_active_column(@model_object), include_blank: false %>
+<%= form.input :active, collection: ['Active', 'Deactive'], selected: @model_object.new_record? ? 'Active' : display_active_column(@model_object), include_blank: false %>
 
 <div class='row-form'>
   <%= label_tag nil, 'Upload images', class: 'span3' %>

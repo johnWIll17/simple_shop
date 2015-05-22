@@ -7,10 +7,12 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% if current_user %>
+
     <div class="container">
       <%= render 'layouts/messages' %>
     </div>
+
+  <% if current_user %>
     <%= render 'layouts/header' %>
     <%= render 'layouts/sidebar' %>
   <% end %>

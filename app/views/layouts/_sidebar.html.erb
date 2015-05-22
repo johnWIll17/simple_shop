@@ -3,13 +3,13 @@
     <div class="breadLine">
         <div class="arrow"></div>
         <div class="adminControl active">
-            Hi, Ta Quoc Vuong
+          <%= "Hi, #{current_user.username}" %>
         </div>
     </div>
 
     <div class="admin">
         <div class="image">
-            <%= image_tag current_user.avatar.url(:thumb), class: 'img-polaroid' %>
+            <%= image_tag current_user.avatar? ? current_user.avatar.url(:thumb) : 'users/avatar.jpg', class: 'img-polaroid' %>
         </div>
         <ul class="control">
             <li><span class="icon-cog"></span> <%= link_to 'Update Profile', edit_user_path(current_user) %></li>

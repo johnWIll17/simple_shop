@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = login(params[:email], params[:password])
+    user = login(params[:email], params[:password], params[:remember_me])
     if user
       if user.admin?
         flash[:success] = 'Welcome back Admin!'
@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
         redirect_to user_path(user)
       end
     else
+      flash[:danger] = 'You have inputed wrong info. Please check out!'
       render :new
     end
   end

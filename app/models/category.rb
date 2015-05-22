@@ -4,6 +4,7 @@ class Category < ActiveRecord::Base
   has_many :products
 
   validates :category_name, presence: true,
+                            uniqueness: true,
                             length: {minimum: 5, maximum: 40},
                             format: { with: VALID_NAME, message: 'Just accept letters, numbers and spaces' }
 
