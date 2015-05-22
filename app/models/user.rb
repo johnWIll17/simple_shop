@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-
   include Searchable
 
   mount_uploader :avatar, ImageUploader

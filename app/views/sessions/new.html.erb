@@ -1,19 +1,27 @@
-<h1>Log In</h1>
-<%= form_tag sessions_path, method: :post do %>
-  <div class="form-group">
-    <%= label_tag :email %>
-    <%= email_field_tag :email, nil, class: 'form-control', required: true %>
+<div class="loginBox">
+  <div class="loginHead">
+    <%= image_tag 'logo.png', alt: 'NTQ Solution Admin Control Panel', title: 'NTQ Solution Admin Control Panel' %>
   </div>
 
-  <div class="form-group">
-    <%= label_tag :password %>
-    <%= password_field_tag :password, nil, class: 'form-control', required: true %>
-  </div>
+  <%= form_tag sessions_path, method: :post, class: 'form-horizontal' do %>
+    <div class="control-group">
+      <%= label_tag :email %>
+      <%= email_field_tag :email, nil, class: 'form-control', required: true %>
+    </div>
 
-  <div class="form-group">
-    <%= check_box_tag :remember_me, class: 'remember_me_checkbox' %>
-    <%= label_tag :remember_me %>
-  </div>
+    <div class="control-group">
+      <%= label_tag :password %>
+      <%= password_field_tag :password, nil, class: 'form-control', required: true %>
+    </div>
 
-  <%= submit_tag 'Log In', class: 'btn btn-primary btn-lg' %>
-<% end %>
+    <div class="control-group">
+      <%= check_box_tag :remember_me, class: 'remember_me_checkbox' %>
+      <%= label_tag :remember_me %>
+    </div>
+
+    <div class='form-actions'>
+      <%= submit_tag 'Log In', class: 'btn btn-block' %>
+    </div>
+  <% end %>
+</div>
+

@@ -10,4 +10,8 @@ module ApplicationHelper
     model_object.active ? 'Active' : 'Deactive'
   end
 
+  def selected_option_active model_object
+    model_object.new_record? ? 'Active' : display_active_column(model_object)
+  end
+
 end

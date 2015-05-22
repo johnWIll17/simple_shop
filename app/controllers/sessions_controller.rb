@@ -1,29 +1,16 @@
 class SessionsController < ApplicationController
   skip_before_action :require_login, except: [:destroy]
-  skip_before_action :user_access, only: [:new, :destroy]
 
   def new
-    if current_user
-      if current_user.admin?
-        redirect_to categories_path
-      else
-        redirect_to user_path(current_user)
-      end
-    end
   end
 
   def create
     user = login(params[:email], params[:password], params[:remember_me])
     if user
-      if user.admin?
-        flash[:success] = 'Welcome back Admin!'
-        redirect_to categories_path
-      else
-        flash[:success] = "Welcome back #{user.username}"
-        redirect_to user_path(user)
-      end
+      flash[:success] = 'Welcome back!'
+      redirect_to categories_path
     else
-      flash[:danger] = 'You have inputed wrong info. Please check out!'
+      flash[:danger] = 'Email or password is invalid. Please check out!'
       render :new
     end
   end

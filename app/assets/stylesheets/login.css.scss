@@ -1,8 +1,8 @@
 .loginBox{
     width: 340px; 
     position: absolute; 
-    left: 50%; 
-    top: 50%; 
+    left: 35%;
+    top: 550%; 
     margin-top: -133px; 
     margin-left: -150px; 
     background: #F9F9F9; 
@@ -36,23 +36,20 @@
     padding: 10px 20px; 
     margin: 0px;
 }        
-.loginBox label.checkbox{
-    margin-left: 0px; 
-    padding: 0px; 
-    cursor: pointer;
-}
-.loginBox label.checkbox .checker{
-    margin-top: -2px;
-}
+//.loginBox label.checkbox{
+//    margin-left: 0px; 
+//    padding: 0px; 
+//    cursor: pointer;
+//}
+//.loginBox label.checkbox .checker{
+//    margin-top: -2px;
+//}
 .loginBox input[type="text"], 
+.loginBox input[type="email"], 
 .loginBox input[type="password"]{
     width: 286px;
 }
-.loginBox input[type="checkbox"] {
-    margin-left: 0px !important;
-}
-                    
-        
-        
-    
+//.loginBox input[type="checkbox"] {
+//    margin-left: 0px !important;
+//}
 

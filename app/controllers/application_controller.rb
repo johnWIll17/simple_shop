@@ -1,10 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  helper_method :sort_column, :sort_direction
   before_action :require_login
-  before_action :user_access
   before_action :set_model_object, only: [:edit, :update]
+  helper_method :sort_column, :sort_direction
 
 
   #Constants for working with Active & Delete submit button
@@ -43,8 +42,6 @@ class ApplicationController < ActionController::Base
       create_image if defined? create_image
 
       flash[:success] = "You have created successfully!"
-
-      redirect_user if defined? redirect_user
       redirect_to send(@model_objects_path)
     else
       render :new
@@ -53,11 +50,6 @@ class ApplicationController < ActionController::Base
 
   def update
     if @model_object.update(object_params)
-      unless current_user.admin?
-        flash[:success] = 'Your update was successfully!'
-        redirect_to user_path(current_user)
-        return
-      end
       create_image if defined? create_image
 
       flash[:success] = "You have updated successfully!"
@@ -127,23 +119,9 @@ class ApplicationController < ActionController::Base
       action_form ACTIVE
     end
 
-    #def child_logic
-    #  create_success if defined? create_success
-    #end
-
     def not_authenticated
-      #flash[:warning] = 'You have to authenticate to access that page.'
       flash[:danger] = 'You have to authenticate to access that page.'
       redirect_to log_in_path
-    end
-
-    def user_access
-      if current_user
-        unless current_user.admin?
-          flash[:danger] = "You don't have permission to access that page!"
-          redirect_to user_path(current_user)
-        end
-      end
     end
 
 end
