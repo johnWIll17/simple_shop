@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe UsersController do
 
-  describe 'adminstration' do
+  describe 'user access' do
     before :each do
-      @user = create(:admin, username: 'adminuser', email: 'admin@user.com.vn')
+      @user = create(:user, username: 'validuser', email: 'valid@user.com.vn')
       session[:user_id] = @user.id
     end
 
@@ -50,7 +50,7 @@ describe UsersController do
           user1 = create(:user, username: 'username-1')
           user2 = create(:user, username: 'New_user_created', active: false)
           get :index, sort: 'username', direction: 'desc'
-          expect(assigns(:model_objects)).to eq [user1, user2, @user]
+          expect(assigns(:model_objects)).to eq [@user, user1, user2]
         end
       end
     end
@@ -84,7 +84,9 @@ describe UsersController do
 
       context 'with invalid id' do
         it 'redirect to 404' do
-          get :edit, id: 1000000
+          user = create(:user)
+          user.destroy
+          get :edit, id: user.id
           expect(response).to redirect_to '/404'
         end
       end
@@ -194,86 +196,8 @@ describe UsersController do
         end
       end
     end
-    ###############
+
   end
-###################################
-
-  describe 'user access' do
-    before :each do
-      @user = create(:user, username: 'normaluser', email: 'normal@example.com')
-      session[:user_id] = @user.id
-    end
-
-    #same cases here
-    describe 'GET #index' do
-      it 'redirects to user show page' do
-        get :index
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'GET #edit' do
-      it 'retrieves the user info' do
-        get :edit, id: @user
-        expect(assigns(:model_object)).to eq @user
-      end
-
-      it 'render edit template' do
-        get :edit, id: @user
-        expect(response).to render_template :edit
-      end
-    end
-
-    describe 'POST #create' do
-      it 'redirects to user show page' do
-        user = create(:user)
-        post :create, id: user,
-          user: attributes_for(:user)
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'PUT #update' do
-      context 'valid update' do
-        it 'retrieve the user info' do
-          put :update, id: @user,
-            user: attributes_for(:user)
-          expect(assigns(:model_object)).to eq @user
-        end
-
-        it 'update valid user' do
-          put :update, id: @user,
-            user: attributes_for(:user,
-              username: 'New_updated_user',
-              email: 'newemail@example.com')
-          @user.reload
-          expect(@user.username).to eq 'New_updated_user'
-          expect(@user.email).to eq 'newemail@example.com'
-        end
-
-        it 'render user show page' do
-          put :update, id: @user, user: attributes_for(:user)
-          expect(response).to redirect_to user_path(@user)
-        end
-
-      end
-
-      context 'invalid update' do
-        it 'not update user' do
-          put :update, id: @user, user: attributes_for(:user,
-                                                      username: 'New_name_user')
-          expect(@user.username).not_to eq 'New_name_user'
-        end
-
-        it 're-render edit' do
-          put :update, id: @user, user: attributes_for(:invalid_user)
-          expect(response).to render_template :edit
-        end
-      end
-    end
-    ###############
-  end
-
 
 ######################################
   describe 'guest access' do
@@ -307,8 +231,6 @@ describe UsersController do
         expect(response).to redirect_to log_in_url
       end
     end
-
-
   end
 
 end

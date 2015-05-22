@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/feature_helpers'
 
 ###################################################
 # Log in with valid and invalid info
@@ -10,24 +9,24 @@ feature 'Visitor sign in' do
   scenario 'with valid email and password' do
     user = create(:user)
     log_in_with user.email, 'whatispassword'
-    expect(page).to have_content "Welcome back #{user.username}"
+    expect(page).to have_content "Welcome back!"
   end
 
   scenario 'with invalid email and password' do
     user = create(:user)
     log_in_with user.email, 'thisiserrorpassword'
-    expect(page).to have_content 'You have inputed wrong info. Please check out!'
+    expect(page).to have_content 'Email or password is invalid. Please check out!'
   end
 
   scenario 'with blank email' do
     log_in_with '', 'whatisthepassword'
-    expect(page).to have_content 'You have inputed wrong info. Please check out!'
+    expect(page).to have_content 'Email or password is invalid. Please check out!'
   end
 
   scenario 'with blank password' do
     user = create(:user)
     log_in_with user.email, ''
-    expect(page).to have_content 'You have inputed wrong info. Please check out!'
+    expect(page).to have_content 'Email or password is invalid. Please check out!'
   end
 
 end

@@ -43,14 +43,37 @@ describe Category do
     expect(category.errors[:category_name]).to include('is too long (maximum is 40 characters)')
   end
 
-  it 'is invalid with INVALID category format' do
-    invalid_name1 = 'category_1'
-    invalid_name2 = '/cate?gory-5'
-    invalid_name3 = "<script>alert('hello')</script>"
-    invalid_name4 = 'cate\gory + name'
+  describe ' is invalid with INVALID category format ' do
+    before :each do
+      @invalid_name1 = 'category_1'
+      @invalid_name2 = '/cate?gory-5'
+      @invalid_name3 = "<script>alert('hello')</script>"
+      @invalid_name4 = 'cate\gory + name'
+    end
 
-    [invalid_name1, invalid_name2, invalid_name3, invalid_name4].each do |invalid_name|
-      category = build(:category, category_name: invalid_name)
+    it 'is invalid because have _' do
+      category = build(:category, category_name: @invalid_name1)
+      category.valid?
+
+      expect(category.errors[:category_name]).to include('Just accept letters, numbers and spaces')
+    end
+
+    it 'is invalid because have / and ?' do
+      category = build(:category, category_name: @invalid_name2)
+      category.valid?
+
+      expect(category.errors[:category_name]).to include('Just accept letters, numbers and spaces')
+    end
+
+    it 'is invalid because include script tag' do
+      category = build(:category, category_name: @invalid_name3)
+      category.valid?
+
+      expect(category.errors[:category_name]).to include('Just accept letters, numbers and spaces')
+    end
+
+    it 'is invalid because have \ and +' do
+      category = build(:category, category_name: @invalid_name4)
       category.valid?
 
       expect(category.errors[:category_name]).to include('Just accept letters, numbers and spaces')
@@ -65,16 +88,26 @@ describe Category do
   end
 
   #test class methods
-  it 'returns a list of results that match search' do
-    search_fields = [:category_name, :active]
-    category1 = create(:category, category_name: 'category 1', active: true)
-    category2 = create(:category, category_name: 'new category', active: false)
-    category3 = create(:category, category_name: 'not this one', active: true)
+  describe 'returns a list of results that matches search' do
+    before :each do
+      @search_fields = [:category_name, :active]
+      @category1 = create(:category, category_name: 'category 1', active: true)
+      @category2 = create(:category, category_name: 'new category', active: false)
+      @category3 = create(:category, category_name: 'not this one', active: true)
+    end
 
-    expect( Category.search('act',      search_fields) ).to eq [category1, category2, category3]
-    expect( Category.search('deactive', search_fields) ).to eq [category2]
-    expect( Category.search('not',      search_fields) ).to eq [category3]
-    expect( Category.search('category', search_fields) ).to eq [category1, category2]
+    it " returns a list that match search_term 'act' " do
+      expect( Category.search('act', @search_fields) ).to eq [@category1, @category2, @category3]
+    end
+    it " returns a list that match search_term 'deactive' " do
+      expect( Category.search('deactive', @search_fields) ).to eq [@category2]
+    end
+    it " returns a list that matches search_term 'not' " do
+      expect( Category.search('not', @search_fields) ).to eq [@category3]
+    end
+    it " returns a list that matches search_term 'category' " do
+      expect( Category.search('category', @search_fields) ).to eq [@category1, @category2]
+    end
   end
 
 end

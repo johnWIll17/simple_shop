@@ -4,12 +4,7 @@ FactoryGirl.define do
     email { Faker::Internet.free_email }
     password 'whatispassword'
     password_confirmation { password }
-
     active true
-
-    factory :admin do
-      admin true
-    end
 
     factory :invalid_user do
       username nil

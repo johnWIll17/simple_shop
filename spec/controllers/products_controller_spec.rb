@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe ProductsController do
 
-  describe 'adminstration' do
+  describe 'user access' do
     before :each do
-      user = create(:admin)
+      user = create(:user)
       session[:user_id] = user.id
     end
 
@@ -195,54 +195,9 @@ describe ProductsController do
         end
       end
     end
-    ###############
+
   end
 ###################################
-
-  describe 'user access' do
-    before :each do
-      @user = create(:user)
-      session[:user_id] = @user.id
-    end
-
-    #same cases here
-    describe 'GET #index' do
-      it 'redirects to user show page' do
-        get :index
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'GET #edit' do
-      it 'redirects to user show page' do
-        product = create(:product)
-        get :edit, id: product
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'POST #create' do
-      it 'redirects to user show page' do
-        product = create(:product)
-        post :create, id: product,
-          product: attributes_for(:product)
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'PUT #update' do
-      it 'redirects to user show page' do
-        product = create(:product)
-        put :update, id: product,
-          product: attributes_for(:product)
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-    ###############
-  end
-
-
-######################################
   describe 'guest access' do
     describe 'GET #index' do
       it 'requires login' do
@@ -274,8 +229,6 @@ describe ProductsController do
         expect(response).to redirect_to log_in_url
       end
     end
-
-
   end
 
 end

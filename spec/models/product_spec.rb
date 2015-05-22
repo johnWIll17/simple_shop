@@ -35,16 +35,38 @@ describe Product do
     expect(product.errors[:product_name]).to include("is too long (maximum is 40 characters)")
   end
 
-  it 'is invalid with INVALID product_name format' do
-    category = create(:category)
 
-    invalid_name1 = 'product-name'
-    invalid_name2 = 'prod+uct nam\e'
-    invalid_name3 = '?product_name'
-    invalid_name4 = "<script>alert('hello')</script>"
+  describe 'is invalid with INVALID product_name format' do
+    before :each do
+      @invalid_name1 = 'product-name'
+      @invalid_name2 = 'prod+uct nam\e'
+      @invalid_name3 = '?product_name'
+      @invalid_name4 = "<script>alert('hello')</script>"
+    end
 
-    [invalid_name1, invalid_name2, invalid_name3, invalid_name4].each do |invalid_name|
-      product = build(:product, category: category , product_name: invalid_name)
+    it 'is invalid because have -' do
+      product = build(:product, product_name: @invalid_name1)
+      product.valid?
+
+      expect(product.errors[:product_name]).to include('Just accept letters, numbers and spaces')
+    end
+
+    it 'is invalid because have \ and +' do
+      product = build(:product, product_name: @invalid_name2)
+      product.valid?
+
+      expect(product.errors[:product_name]).to include('Just accept letters, numbers and spaces')
+    end
+
+    it 'is invalid because have ? and _' do
+      product = build(:product, product_name: @invalid_name3)
+      product.valid?
+
+      expect(product.errors[:product_name]).to include('Just accept letters, numbers and spaces')
+    end
+
+    it 'is invalid because have script tag' do
+      product = build(:product, product_name: @invalid_name4)
       product.valid?
 
       expect(product.errors[:product_name]).to include('Just accept letters, numbers and spaces')
@@ -76,18 +98,29 @@ describe Product do
   end
 
   #test class methods
-  it 'returns a list of results that match search' do
-    category = create(:category)
-    search_fields = [:product_name, :price, :active]
+  describe 'returns a list of results that matches search term' do
+    before :each do
+      category = create(:category)
+      @search_fields = [:product_name, :price, :active]
 
-    product1 = create(:product, category: category, product_name: 'find product', active: true,  price: 152)
-    product2 = create(:product, category: category, product_name: 'test product', active: false, price: 452)
-    product3 = create(:product, category: category, product_name: 'product new',  active: true,  price: 540)
+      @product1 = create(:product, category: category, product_name: 'find product', active: true,  price: 152)
+      @product2 = create(:product, category: category, product_name: 'test product', active: false, price: 452)
+      @product3 = create(:product, category: category, product_name: 'product new',  active: true,  price: 540)
+    end
 
-    expect( Product.search('act',      search_fields) ).to eq [product1, product2, product3]
-    expect( Product.search('deactive', search_fields) ).to eq [product2]
-    expect( Product.search('test',     search_fields) ).to eq [product2]
-    expect( Product.search('ne',       search_fields) ).to eq [product3]
+    it " returns a list that maches search_term 'act' " do
+      expect( Product.search('act', @search_fields) ).to eq [@product1, @product2, @product3]
+    end
+    it " returns a list that maches search_term 'deactive' " do
+      expect( Product.search('deactive', @search_fields) ).to eq [@product2]
+    end
+    it " returns a list that maches search_term 'test' " do
+      expect( Product.search('test', @search_fields) ).to eq [@product2]
+    end
+
+    it " returns a list that maches search_term 'ne' " do
+      expect( Product.search('ne', @search_fields) ).to eq [@product3]
+    end
   end
 
 end

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 describe CategoriesController do
 
-  describe 'adminstration' do
+  describe 'user access' do
     before :each do
-      user = create(:admin)
+      user = create(:user)
       session[:user_id] = user.id
     end
 
@@ -49,6 +49,7 @@ describe CategoriesController do
         it 'populates an array as order' do
           category1 = create(:category, category_name: 'Category 1')
           category2 = create(:category, category_name: 'New Category', active: false)
+
           get :index, sort: 'category_name', direction: 'desc'
           expect(assigns(:model_objects)).to eq [category2, category1]
         end
@@ -84,9 +85,9 @@ describe CategoriesController do
 
       context 'with invalid edit id' do
         it 'redirects to 404 when accessing invalid id' do
-          #get :edit, id: 1000000
           category = create(:category)
           category.destroy
+
           get :edit, id: category.id
           expect(response).to redirect_to '/404'
         end
@@ -197,54 +198,9 @@ describe CategoriesController do
         end
       end
     end
-    ###############
+
   end
 ###################################
-
-  describe 'user access' do
-    before :each do
-      @user = create(:user)
-      session[:user_id] = @user.id
-    end
-
-    #same cases here
-    describe 'GET #index' do
-      it 'redirects to user show page' do
-        get :index
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'GET #edit' do
-      it 'redirects to user show page' do
-        category = create(:category)
-        get :edit, id: category
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'POST #create' do
-      it 'redirects to user show page' do
-        category = create(:category)
-        post :create, id: category,
-          category: attributes_for(:category)
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-
-    describe 'PUT #update' do
-      it 'redirects to user show page' do
-        category = create(:category)
-        put :update, id: category,
-          category: attributes_for(:category)
-        expect(response).to redirect_to user_path(@user)
-      end
-    end
-    ###############
-  end
-
-
-######################################
   describe 'guest access' do
     describe 'GET #index' do
       it 'requires login' do
@@ -276,8 +232,6 @@ describe CategoriesController do
         expect(response).to redirect_to log_in_url
       end
     end
-
-
   end
 
 end

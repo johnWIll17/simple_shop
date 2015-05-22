@@ -63,14 +63,34 @@ describe User do
     expect(user.errors[:password]).to include('is too long (maximum is 15 characters)')
   end
 
-  it 'is invalid with INVALID username format' do
-    invalid_name1 = 'user?name'
-    invalid_name2 = 'user\nam+e'
-    invalid_name3 = '?user,name'
-    invalid_name4 = "<script>alert('hello')</script>"
+  describe 'is invalid with INVALID username format' do
+    before :each do
+      @invalid_name1 = 'user?name'
+      @invalid_name2 = 'user\nam+e'
+      @invalid_name3 = '?user,name'
+      @invalid_name4 = "<script>alert('hello')</script>"
+    end
 
-    [invalid_name1, invalid_name2, invalid_name3, invalid_name4].each do |invalid_name|
-      user = build(:user, username: invalid_name)
+    it 'is invalid because have ?' do
+      user = build(:user, username: @invalid_name1)
+      user.valid?
+
+      expect(user.errors[:username]).to include('Just accept letters, numbers, _ and -')
+    end
+    it 'is invalid because have \ and +' do
+      user = build(:user, username: @invalid_name2)
+      user.valid?
+
+      expect(user.errors[:username]).to include('Just accept letters, numbers, _ and -')
+    end
+    it 'is invalid because have ? and ,' do
+      user = build(:user, username: @invalid_name3)
+      user.valid?
+
+      expect(user.errors[:username]).to include('Just accept letters, numbers, _ and -')
+    end
+    it 'is invalid because have script tag' do
+      user = build(:user, username: @invalid_name4)
       user.valid?
 
       expect(user.errors[:username]).to include('Just accept letters, numbers, _ and -')
@@ -85,19 +105,43 @@ describe User do
     expect(user.errors[:email]).to include('has already been taken')
   end
 
-  it 'is invalid with INVALID email format' do
-    invalid_name1 = 'user@example,com'
-    invalid_name2 = 'john@@example.com.vn'
-    invalid_name3 = 'bob@example@com.vn'
-    invalid_name4 = 'username@_example.com.vn'
+  describe 'is invalid with INVALID email format' do
+    before :each do
+      @invalid_name1 = 'user@example,com'
+      @invalid_name2 = 'john@@example.com.vn'
+      @invalid_name3 = 'bob@example@com.vn'
+      @invalid_name4 = 'username@_example.com.vn'
+    end
 
-    [invalid_name1, invalid_name2, invalid_name3, invalid_name4].each do |invalid_name|
-      user = build(:user, email: invalid_name)
+    it 'is invalid because email has ,' do
+      user = build(:user, email: @invalid_name1)
+      user.valid?
+
+      expect(user.errors[:email]).to include('has invalid format')
+    end
+
+    it 'is invalid because email has 2 @ symbol next each other' do
+      user = build(:user, email: @invalid_name2)
+      user.valid?
+
+      expect(user.errors[:email]).to include('has invalid format')
+    end
+
+    it 'is invalid because email has 2 @ symbol' do
+      user = build(:user, email: @invalid_name3)
+      user.valid?
+
+      expect(user.errors[:email]).to include('has invalid format')
+    end
+
+    it 'is invalid because email has _ after @ symbol' do
+      user = build(:user, email: @invalid_name4)
       user.valid?
 
       expect(user.errors[:email]).to include('has invalid format')
     end
   end
+
 
   it 'is invalid if password and password_confirm not match' do
     user = build(:user, password: '12345678', password_confirmation: '87654321')
@@ -121,16 +165,29 @@ describe User do
   end
 
   #test class methods
-  it 'returns a list of results that match search' do
-    search_fields = [:username, :email, :active]
-    user1 = create(:user, username: 'username1',     active: true,  email: 'user@example.com',  password: '12345678')
-    user2 = create(:user, username: 'john_will_17',  active: false, email: 'john@ex.com.vn',    password: '12345678')
-    user3 = create(:user, username: 'big_John_1985', active: true,  email: 'big_boy@user.com',  password: '12345678')
+  describe 'returns a list of resutls that matches search' do
+    before :each do
+      @search_fields = [:username, :email, :active]
+      @user1 = create(:user, username: 'username1',     active: true,  email: 'user@example.com',  password: '12345678')
+      @user2 = create(:user, username: 'john_will_17',  active: false, email: 'john@ex.com.vn',    password: '12345678')
+      @user3 = create(:user, username: 'big_John_1985', active: true,  email: 'big_boy@user.com',  password: '12345678')
+    end
 
-    expect( User.search('act',      search_fields) ).to eq [user1, user2, user3]
-    expect( User.search('deactive', search_fields) ).to eq [user2]
-    expect( User.search('john',     search_fields) ).to eq [user2, user3]
-    expect( User.search('@ex',      search_fields) ).to eq [user1, user2]
+    it " returns a list that matches search_term 'act' " do
+      expect( User.search('act', @search_fields) ).to eq [@user1, @user2, @user3]
+    end
+
+    it " returns a list that matches search_term 'deactive' " do
+      expect( User.search('deactive', @search_fields) ).to eq [@user2]
+    end
+
+    it " returns a list that matches search_term 'john' " do
+      expect( User.search('john', @search_fields) ).to eq [@user2, @user3]
+    end
+
+    it " returns a list that matches search_term '@ex' " do
+      expect( User.search('@ex', @search_fields) ).to eq [@user1, @user2]
+    end
   end
 
 end
